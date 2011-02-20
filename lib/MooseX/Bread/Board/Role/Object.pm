@@ -17,7 +17,19 @@ after BUILD => sub {
     return unless $meta->has_services;
 
     for my $service ($meta->services) {
-        $self->add_service($service->clone);
+        if ($service->isa('MooseX::Bread::Board::BlockInjection')) {
+            my $block = $service->block;
+            $self->add_service(
+                $service->clone(
+                    block => sub {
+                        $block->(@_, $self)
+                    },
+                )
+            );
+        }
+        else {
+            $self->add_service($service->clone);
+        }
     }
 };
 
