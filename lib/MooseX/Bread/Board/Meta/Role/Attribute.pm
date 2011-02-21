@@ -1,5 +1,6 @@
 package MooseX::Bread::Board::Meta::Role::Attribute;
 use Moose::Role;
+Moose::Util::meta_attribute_alias('Service');
 
 use Bread::Board::Types;
 use List::MoreUtils qw(any);
