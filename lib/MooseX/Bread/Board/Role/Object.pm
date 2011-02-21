@@ -13,7 +13,6 @@ after BUILD => sub {
     my $self = shift;
 
     my $meta = Class::MOP::class_of($self);
-    return unless $meta->has_any_services;
 
     for my $service ($meta->get_all_services) {
         if ($service->isa('MooseX::Bread::Board::BlockInjection')) {

@@ -48,13 +48,16 @@ has constructor_name => (
     predicate => 'has_constructor_name',
 );
 
+has associated_service => (
+    is        => 'rw',
+    isa       => 'Bread::Board::Service',
+    predicate => 'has_associated_service',
+);
+
 after attach_to_class => sub {
     my $self = shift;
 
     return unless $self->service;
-
-    my $meta = $self->associated_class;
-    my $attr_reader = $self->get_read_method;
 
     my %params = (
         associated_attribute => $self,
@@ -93,7 +96,7 @@ after attach_to_class => sub {
         }
     }
 
-    $meta->add_service($service) if $service;
+    $self->associated_service($service) if $service;
 };
 
 after _process_options => sub {
