@@ -83,6 +83,18 @@ after attach_to_class => sub {
     $meta->add_service($service);
 };
 
+after _process_options => sub {
+    my $class = shift;
+    my ($name, $opts) = @_;
+
+    return unless exists $opts->{default};
+    return unless exists $opts->{class}
+               || exists $opts->{block}
+               || exists $opts->{value};
+
+    die "default is not valid when Bread::Board service options are set";
+};
+
 around get_value => sub {
     my $orig = shift;
     my $self = shift;
