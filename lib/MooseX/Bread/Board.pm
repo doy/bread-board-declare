@@ -6,6 +6,7 @@ my (undef, undef, $init_meta) = Moose::Exporter->build_import_methods(
     class_metaroles => {
         attribute => ['MooseX::Bread::Board::Meta::Role::Attribute'],
         class     => ['MooseX::Bread::Board::Meta::Role::Class'],
+        instance  => ['MooseX::Bread::Board::Meta::Role::Instance'],
     },
     base_class_roles => ['MooseX::Bread::Board::Role::Object'],
 );

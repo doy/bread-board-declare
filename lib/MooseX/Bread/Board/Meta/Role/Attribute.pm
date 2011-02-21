@@ -99,9 +99,9 @@ around inline_get => sub {
     my $self = shift;
     my ($instance) = @_;
 
-    return '((' . $self->inline_has($instance) . ')' . "\n"
+    return 'do { (' . $self->inline_has($instance) . ')' . "\n"
              . '? (' . $self->$orig($instance) . ')'       . "\n"
-             . ': (' . $instance . '->get_service(\'' . $self->name . '\')->get))';
+             . ': (' . $instance . '->get_service(\'' . $self->name . '\')->get) }';
 };
 
 no Moose::Role;
