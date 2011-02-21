@@ -44,6 +44,7 @@ with_immutable {
 $i = 0;
 {
     my $foo = Foo->new;
+    isa_ok($foo, 'Bread::Board::Container');
     ok($foo->has_service($_), "has service $_")
         for qw(bar baz quux);
     ok(!$foo->has_service('foo'), "doesn't have service foo");
