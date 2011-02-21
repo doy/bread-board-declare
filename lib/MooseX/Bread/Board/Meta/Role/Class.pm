@@ -35,7 +35,11 @@ before superclasses => sub {
     my $self = shift;
 
     return unless @_;
-    return if any { $_->isa('Bread::Board::Container') } @_;
+
+    die "Multiple inheritance is not supported for MooseX::Bread::Board classes"
+        if @_ > 1;
+
+    return if $_[0]->isa('Bread::Board::Container');
 
     die "Cannot inherit from " . join(', ', @_)
       . " because MooseX::Bread::Board classes must inherit"
