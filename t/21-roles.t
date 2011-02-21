@@ -9,7 +9,9 @@ use Test::More;
     use MooseX::Bread::Board;
 
     has role1 => (
-        traits => ['Service'],
+        (Moose->VERSION < 1.9900
+            ? (traits => ['Service'])
+            : ()),
         is     => 'ro',
         isa    => 'Str',
         value  => 'ROLE1',
@@ -46,7 +48,9 @@ use Test::More;
     use MooseX::Bread::Board;
 
     has role2 => (
-        traits => ['Service'],
+        (Moose->VERSION < 1.9900
+            ? (traits => ['Service'])
+            : ()),
         is     => 'ro',
         isa    => 'Str',
         value  => 'ROLE2',
