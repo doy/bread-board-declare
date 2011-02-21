@@ -1,4 +1,4 @@
-package MooseX::Bread::Board::Meta::Role::Instance;
+package Bread::Board::Declare::Meta::Role::Instance;
 use Moose::Role;
 
 # XXX: ugh, this should be settable at the attr level, fix this in moose

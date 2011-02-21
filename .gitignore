@@ -10,4 +10,4 @@ nytprof.out
 MANIFEST.bak
 *.sw[po]
 .build
-MooseX-Bread-Board-*
+Bread-Board-Declare-*

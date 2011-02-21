@@ -7,7 +7,7 @@ use Test::Moose;
 {
     package Role1;
     use Moose::Role;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     has role1 => (
         (Moose->VERSION < 1.9900
@@ -22,7 +22,7 @@ use Test::Moose;
 {
     package Parent;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     with 'Role1';
 
@@ -46,7 +46,7 @@ use Test::Moose;
 {
     package Role2;
     use Moose::Role;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     has role2 => (
         (Moose->VERSION < 1.9900
@@ -61,7 +61,7 @@ use Test::Moose;
 {
     package Child;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     extends 'Parent';
     with 'Role2';

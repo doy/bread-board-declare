@@ -1,8 +1,8 @@
-package MooseX::Bread::Board::BlockInjection;
+package Bread::Board::Declare::BlockInjection;
 use Moose;
 
 extends 'Bread::Board::BlockInjection';
-with 'MooseX::Bread::Board::Role::Service';
+with 'Bread::Board::Declare::Role::Service';
 
 __PACKAGE__->meta->make_immutable;
 no Moose;

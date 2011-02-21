@@ -7,7 +7,7 @@ use Test::Fatal;
 {
     package Foo;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     ::like(::exception {
         has foo => (

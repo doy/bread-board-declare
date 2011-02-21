@@ -13,7 +13,7 @@ my $i;
 {
     package Foo;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     has foo => (
         is      => 'ro',
@@ -54,9 +54,9 @@ $i = 0;
         for qw(bar baz quux);
     ok(!$foo->has_service($_), "doesn't have service $_")
         for qw(foo baz2);
-    isa_ok($foo->get_service('bar'), 'MooseX::Bread::Board::Literal');
-    isa_ok($foo->get_service('baz'), 'MooseX::Bread::Board::ConstructorInjection');
-    isa_ok($foo->get_service('quux'), 'MooseX::Bread::Board::BlockInjection');
+    isa_ok($foo->get_service('bar'), 'Bread::Board::Declare::Literal');
+    isa_ok($foo->get_service('baz'), 'Bread::Board::Declare::ConstructorInjection');
+    isa_ok($foo->get_service('quux'), 'Bread::Board::Declare::BlockInjection');
 }
 
 {

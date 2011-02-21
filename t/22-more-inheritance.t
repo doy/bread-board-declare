@@ -6,7 +6,7 @@ use Test::More;
 {
     package Parent;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     has foo => (
         is    => 'ro',
@@ -28,7 +28,7 @@ use Test::More;
 {
     package Child1;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     extends 'Parent';
 
@@ -42,7 +42,7 @@ use Test::More;
 {
     package Child2;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     extends 'Parent';
 
@@ -60,7 +60,7 @@ use Test::More;
 {
     package Child3;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     extends 'Child1';
 

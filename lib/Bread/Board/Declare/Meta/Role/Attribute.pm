@@ -1,13 +1,13 @@
-package MooseX::Bread::Board::Meta::Role::Attribute;
+package Bread::Board::Declare::Meta::Role::Attribute;
 use Moose::Role;
 Moose::Util::meta_attribute_alias('Service');
 
 use Bread::Board::Types;
 use List::MoreUtils qw(any);
 
-use MooseX::Bread::Board::BlockInjection;
-use MooseX::Bread::Board::ConstructorInjection;
-use MooseX::Bread::Board::Literal;
+use Bread::Board::Declare::BlockInjection;
+use Bread::Board::Declare::ConstructorInjection;
+use Bread::Board::Declare::Literal;
 
 has service => (
     is      => 'ro',
@@ -75,13 +75,13 @@ after attach_to_class => sub {
 
     my $service;
     if ($self->has_block) {
-        $service = MooseX::Bread::Board::BlockInjection->new(
+        $service = Bread::Board::Declare::BlockInjection->new(
             %params,
             block => $self->block,
         );
     }
     elsif ($self->has_literal_value) {
-        $service = MooseX::Bread::Board::Literal->new(
+        $service = Bread::Board::Declare::Literal->new(
             %params,
             value => $self->literal_value,
         );
@@ -89,7 +89,7 @@ after attach_to_class => sub {
     elsif ($self->has_type_constraint) {
         my $tc = $self->type_constraint;
         if ($tc->isa('Moose::Meta::TypeConstraint::Class')) {
-            $service = MooseX::Bread::Board::ConstructorInjection->new(
+            $service = Bread::Board::Declare::ConstructorInjection->new(
                 %params,
                 class => $tc->class,
             );
@@ -174,7 +174,7 @@ else {
 
         return Moose::Meta::Class->create_anon_class(
             superclasses => [ $self->$orig(@_) ],
-            roles        => [ 'MooseX::Bread::Board::Meta::Role::Accessor' ],
+            roles        => [ 'Bread::Board::Declare::Meta::Role::Accessor' ],
             cache        => 1
         )->name;
     };

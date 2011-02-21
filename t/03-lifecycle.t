@@ -19,7 +19,7 @@ my $i;
 {
     package Foo;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     has bar => (
         is    => 'ro',

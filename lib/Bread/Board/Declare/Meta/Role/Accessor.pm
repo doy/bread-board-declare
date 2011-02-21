@@ -1,4 +1,4 @@
-package MooseX::Bread::Board::Meta::Role::Accessor;
+package Bread::Board::Declare::Meta::Role::Accessor;
 use Moose::Role;
 
 around _inline_get => sub {

@@ -1,8 +1,8 @@
-package MooseX::Bread::Board::Literal;
+package Bread::Board::Declare::Literal;
 use Moose;
 
 extends 'Bread::Board::Literal';
-with 'MooseX::Bread::Board::Role::Service';
+with 'Bread::Board::Declare::Role::Service';
 
 __PACKAGE__->meta->make_immutable;
 no Moose;

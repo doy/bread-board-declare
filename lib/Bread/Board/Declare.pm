@@ -1,4 +1,4 @@
-package MooseX::Bread::Board;
+package Bread::Board::Declare;
 use Moose::Exporter;
 
 use Bread::Board ();
@@ -6,17 +6,17 @@ use Bread::Board ();
 my (undef, undef, $init_meta) = Moose::Exporter->build_import_methods(
     install => ['import', 'unimport'],
     class_metaroles => {
-        attribute => ['MooseX::Bread::Board::Meta::Role::Attribute'],
-        class     => ['MooseX::Bread::Board::Meta::Role::Class'],
-        instance  => ['MooseX::Bread::Board::Meta::Role::Instance'],
+        attribute => ['Bread::Board::Declare::Meta::Role::Attribute'],
+        class     => ['Bread::Board::Declare::Meta::Role::Class'],
+        instance  => ['Bread::Board::Declare::Meta::Role::Instance'],
     },
     (Moose->VERSION >= 1.9900
         ? (role_metaroles => {
                applied_attribute =>
-                   ['MooseX::Bread::Board::Meta::Role::Attribute'],
+                   ['Bread::Board::Declare::Meta::Role::Attribute'],
            })
         : ()),
-    base_class_roles => ['MooseX::Bread::Board::Role::Object'],
+    base_class_roles => ['Bread::Board::Declare::Role::Object'],
 );
 
 sub init_meta {

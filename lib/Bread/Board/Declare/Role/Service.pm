@@ -1,4 +1,4 @@
-package MooseX::Bread::Board::Role::Service;
+package Bread::Board::Declare::Role::Service;
 use Moose::Role;
 
 has associated_attribute => (
@@ -27,7 +27,7 @@ sub parent_container {
     my $container = $self;
     until (!defined($container)
         || ($container->isa('Bread::Board::Container')
-            && $container->does('MooseX::Bread::Board::Role::Object'))) {
+            && $container->does('Bread::Board::Declare::Role::Object'))) {
         $container = $container->parent;
     }
     die "Couldn't find associated object!" unless defined $container;

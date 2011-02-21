@@ -1,4 +1,4 @@
-package MooseX::Bread::Board::Role::Object;
+package Bread::Board::Declare::Role::Object;
 use Moose::Role;
 
 has name => (
@@ -15,7 +15,7 @@ after BUILD => sub {
     my $meta = Class::MOP::class_of($self);
 
     for my $service ($meta->get_all_services) {
-        if ($service->isa('MooseX::Bread::Board::BlockInjection')) {
+        if ($service->isa('Bread::Board::Declare::BlockInjection')) {
             my $block = $service->block;
             $self->add_service(
                 $service->clone(

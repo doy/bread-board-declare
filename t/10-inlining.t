@@ -6,7 +6,7 @@ use Test::More;
 {
     package Foo;
     use Moose;
-    use MooseX::Bread::Board;
+    use Bread::Board::Declare;
 
     has foo => (
         reader    => 'get_foo',
