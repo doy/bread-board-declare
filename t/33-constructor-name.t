@@ -18,7 +18,6 @@ use Test::Moose;
     has bar => (
         is               => 'ro',
         isa              => 'Bar',
-        class            => 'Bar',
         constructor_name => 'create',
     );
 }

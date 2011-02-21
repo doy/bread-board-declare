@@ -30,7 +30,6 @@ my $i;
     has baz => (
         is           => 'ro',
         isa          => 'Baz',
-        class        => 'Baz',
         dependencies => ['bar'],
     );
 }

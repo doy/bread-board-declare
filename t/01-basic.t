@@ -28,9 +28,14 @@ my $i;
     );
 
     has baz => (
-        is    => 'ro',
-        isa   => 'Baz',
-        class => 'Baz',
+        is  => 'ro',
+        isa => 'Baz',
+    );
+
+    has baz2 => (
+        is      => 'ro',
+        isa     => 'Baz',
+        service => 0,
     );
 
     has quux => (
@@ -47,7 +52,8 @@ $i = 0;
     isa_ok($foo, 'Bread::Board::Container');
     ok($foo->has_service($_), "has service $_")
         for qw(bar baz quux);
-    ok(!$foo->has_service('foo'), "doesn't have service foo");
+    ok(!$foo->has_service($_), "doesn't have service $_")
+        for qw(foo baz2);
     isa_ok($foo->get_service('bar'), 'MooseX::Bread::Board::Literal');
     isa_ok($foo->get_service('baz'), 'MooseX::Bread::Board::ConstructorInjection');
     isa_ok($foo->get_service('quux'), 'MooseX::Bread::Board::BlockInjection');

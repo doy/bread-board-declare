@@ -9,10 +9,10 @@ use MooseX::Bread::Board::BlockInjection;
 use MooseX::Bread::Board::ConstructorInjection;
 use MooseX::Bread::Board::Literal;
 
-has class => (
-    is        => 'ro',
-    isa       => 'Str',
-    predicate => 'has_class',
+has service => (
+    is      => 'ro',
+    isa     => 'Bool',
+    default => 1,
 );
 
 has block => (
@@ -51,6 +51,8 @@ has constructor_name => (
 after attach_to_class => sub {
     my $self = shift;
 
+    return unless $self->service;
+
     my $meta = $self->associated_class;
     my $attr_reader = $self->get_read_method;
 
@@ -69,29 +71,29 @@ after attach_to_class => sub {
     );
 
     my $service;
-    if ($self->has_class) {
-        $service = MooseX::Bread::Board::ConstructorInjection->new(
-            %params,
-            class => $self->class,
-        )
-    }
-    elsif ($self->has_block) {
+    if ($self->has_block) {
         $service = MooseX::Bread::Board::BlockInjection->new(
             %params,
             block => $self->block,
-        )
+        );
     }
     elsif ($self->has_literal_value) {
         $service = MooseX::Bread::Board::Literal->new(
             %params,
             value => $self->literal_value,
-        )
+        );
     }
-    else {
-        return;
+    elsif ($self->has_type_constraint) {
+        my $tc = $self->type_constraint;
+        if ($tc->isa('Moose::Meta::TypeConstraint::Class')) {
+            $service = MooseX::Bread::Board::ConstructorInjection->new(
+                %params,
+                class => $tc->class,
+            );
+        }
     }
 
-    $meta->add_service($service);
+    $meta->add_service($service) if $service;
 };
 
 after _process_options => sub {
