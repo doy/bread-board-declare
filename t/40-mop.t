@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Foo;
@@ -25,7 +26,7 @@ use Test::More;
     );
 }
 
-{
+with_immutable {
     my $foo = Foo->new;
     my $foo_attr = $foo->meta->get_attribute('foo');
     my $bar_attr = $foo->meta->get_attribute('bar');
@@ -33,6 +34,6 @@ use Test::More;
     is($bar_attr->get_value($foo), 'FOOBAR', "right value");
     ok(!$foo_attr->has_value($foo), "no value");
     ok(!$bar_attr->has_value($foo), "no value");
-}
+} 'Foo';
 
 done_testing;

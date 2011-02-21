@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Parent;
@@ -52,6 +53,7 @@ use Test::More;
     );
 }
 
+with_immutable {
 {
     my $parent = Parent->new;
     ok($parent->has_service('foo'), "parent has foo");
@@ -116,5 +118,6 @@ use Test::More;
     is($child->baz, 'ZAB');
     is($child->quux, 'OOFOOFBARZABQUUX');
 }
+} 'Parent', 'Child';
 
 done_testing;

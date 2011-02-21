@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Role1;
@@ -87,6 +88,7 @@ use Test::More;
     );
 }
 
+with_immutable {
 {
     my $parent = Parent->new;
     ok($parent->has_service('role1'), "parent has role1");
@@ -167,5 +169,6 @@ use Test::More;
     is($child->baz, 'ZAB');
     is($child->quux, 'OOFOOFBAR1ELORZAB1ELOR2ELORQUUX');
 }
+} 'Parent', 'Child';
 
 done_testing;
