@@ -4,6 +4,10 @@ use Moose;
 
 =head1 DESCRIPTION
 
+This is a custom subclass of L<Bread::Board::Literal> which does the
+L<Bread::Board::Declare::Role::Service> role. See those two modules for more
+details.
+
 =cut
 
 extends 'Bread::Board::Literal';

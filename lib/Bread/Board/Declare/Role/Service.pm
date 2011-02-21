@@ -4,9 +4,16 @@ use Moose::Role;
 
 =head1 DESCRIPTION
 
+This role modifies L<Bread::Board::Service> objects for use in
+L<Bread::Board::Declare>. It holds a reference to the attribute object that the
+service is associated with, and overrides the C<get> method to prefer to return
+the value in the attribute, if it exists.
+
 =cut
 
 =attr associated_attribute
+
+The attribute metaobject that this service is associated with.
 
 =cut
 
@@ -31,6 +38,9 @@ around get => sub {
 };
 
 =method parent_container
+
+Returns the Bread::Board::Declare container object that this service is
+contained in.
 
 =cut
 

@@ -12,9 +12,14 @@ use Bread::Board::Declare::Literal;
 
 =head1 DESCRIPTION
 
+This role adds functionality to the attribute metaclass for
+L<Bread::Board::Declare> objects.
+
 =cut
 
 =attr service
+
+Whether or not to create a service for this attribute. Defaults to true.
 
 =cut
 
@@ -26,6 +31,8 @@ has service => (
 
 =attr block
 
+The block to use when creating a L<Bread::Board::BlockInjection> service.
+
 =cut
 
 has block => (
@@ -35,6 +42,9 @@ has block => (
 );
 
 =attr literal_value
+
+The value to use when creating a L<Bread::Board::Literal> service. Note that
+the parameter that should be passed to C<has> is C<value>.
 
 =cut
 
@@ -48,6 +58,9 @@ has literal_value => (
 
 =attr lifecycle
 
+The lifecycle to use when creating the service. See L<Bread::Board::Service>
+and L<Bread::Board::LifeCycle>.
+
 =cut
 
 has lifecycle => (
@@ -57,6 +70,9 @@ has lifecycle => (
 );
 
 =attr dependencies
+
+The dependency specification to use when creating the service. See
+L<Bread::Board::Service::WithDependencies>.
 
 =cut
 
@@ -69,6 +85,9 @@ has dependencies => (
 
 =attr constructor_name
 
+The constructor name to use when creating L<Bread::Board::ConstructorInjection>
+services. Defaults to C<new>.
+
 =cut
 
 has constructor_name => (
@@ -78,6 +97,8 @@ has constructor_name => (
 );
 
 =attr associated_service
+
+The service object that is associated with this attribute.
 
 =cut
 

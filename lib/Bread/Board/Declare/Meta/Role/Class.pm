@@ -7,9 +7,14 @@ use List::MoreUtils qw(any);
 
 =head1 DESCRIPTION
 
+This role adds functionality to the metaclass of L<Bread::Board::Declare>
+classes.
+
 =cut
 
 =method get_all_services
+
+Returns all of the services that are associated with attributes in this class.
 
 =cut
 
