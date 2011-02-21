@@ -12,6 +12,18 @@ around get => sub {
     my $orig = shift;
     my $self = shift;
 
+    my $container = $self->parent_container;
+
+    if ($self->associated_attribute->has_value($container)) {
+        return $self->associated_attribute->get_value($container);
+    }
+
+    return $self->$orig(@_);
+};
+
+sub parent_container {
+    my $self = shift;
+
     my $container = $self;
     until (!defined($container)
         || ($container->isa('Bread::Board::Container')
@@ -20,12 +32,8 @@ around get => sub {
     }
     die "Couldn't find associated object!" unless defined $container;
 
-    if ($self->associated_attribute->has_value($container)) {
-        return $self->associated_attribute->get_value($container);
-    }
-
-    return $self->$orig(@_);
-};
+    return $container;
+}
 
 no Moose::Role;
 
