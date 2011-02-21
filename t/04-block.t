@@ -22,7 +22,7 @@ use Test::More;
 
     has baz => (
         is           => 'ro',
-        isa          => 'Baz',
+        isa          => 'Str',
         block        => sub {
             my ($s, $self) = @_;
             return $s->param('bar') . $self->foo;

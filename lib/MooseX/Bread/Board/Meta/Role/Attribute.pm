@@ -91,17 +91,36 @@ around get_value => sub {
     return $self->$orig($instance)
         if $self->has_value($instance);
 
-    return $instance->get_service($self->name)->get;
+    my $val = $instance->get_service($self->name)->get;
+
+    $self->verify_against_type_constraint($val, instance => $instance)
+        if $self->has_type_constraint;
+
+    if ($self->should_auto_deref) {
+        if (ref($val) eq 'ARRAY') {
+            return wantarray ? @$val : $val;
+        }
+        elsif (ref($val) eq 'HASH') {
+            return wantarray ? %$val : $val;
+        }
+        else {
+            die 'XXX';
+        }
+    }
+    else {
+        return $val;
+    }
 };
 
-around inline_get => sub {
+around accessor_metaclass => sub {
     my $orig = shift;
     my $self = shift;
-    my ($instance) = @_;
 
-    return 'do { (' . $self->inline_has($instance) . ')' . "\n"
-             . '? (' . $self->$orig($instance) . ')'       . "\n"
-             . ': (' . $instance . '->get_service(\'' . $self->name . '\')->get) }';
+    return Moose::Meta::Class->create_anon_class(
+        superclasses => [ $self->$orig(@_) ],
+        roles        => [ 'MooseX::Bread::Board::Meta::Role::Accessor' ],
+        cache        => 1
+    )->name;
 };
 
 no Moose::Role;
