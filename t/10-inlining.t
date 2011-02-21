@@ -20,7 +20,7 @@ use Test::More;
     has bool => (
         traits  => ['Bool'],
         isa     => 'Bool',
-        default => 0,
+        value   => 0,
         handles => {
             bool_unset  => 'unset',
             bool_set    => 'set',
@@ -32,7 +32,8 @@ use Test::More;
     has string => (
         traits  => ['String'],
         isa     => 'Str',
-        default => '',
+        value   => '',
+        default => '', # XXX: ugh, needed because of the default_default stuff
         handles => {
             string_prepend => 'prepend',
             string_chop    => 'chop',
@@ -50,7 +51,7 @@ use Test::More;
     has hash => (
         traits  => ['Hash'],
         isa     => 'HashRef',
-        default => sub { {} },
+        block   => sub { {} },
         handles => {
             hash_delete   => 'delete',
             hash_exists   => 'exists',
@@ -71,7 +72,8 @@ use Test::More;
     has counter => (
         traits  => ['Counter'],
         isa     => 'Int',
-        default => 1,
+        value   => 0,
+        default => 0, # XXX: ugh, needed because of the default_default stuff
         handles => {
             counter_set   => 'set',
             counter_reset => 'reset',
@@ -83,7 +85,7 @@ use Test::More;
     has code => (
         traits  => ['Code'],
         isa     => 'CodeRef',
-        default => 1,
+        block   => sub { sub { } },
         handles => {
             code_execute        => 'execute',
             code_execute_method => 'execute_method',
@@ -93,7 +95,7 @@ use Test::More;
     has array => (
         traits  => ['Array'],
         isa     => 'ArrayRef',
-        default => sub { [] },
+        block   => sub { [] },
         handles => {
             array_unshift       => 'unshift',
             array_shuffle       => 'shuffle',
@@ -125,7 +127,7 @@ use Test::More;
     has number => (
         traits  => ['Number'],
         isa     => 'Num',
-        default => 1,
+        value   => 1,
         handles => {
             number_add => 'add',
             number_set => 'set',

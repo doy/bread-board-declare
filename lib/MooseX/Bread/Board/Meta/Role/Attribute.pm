@@ -2,6 +2,7 @@ package MooseX::Bread::Board::Meta::Role::Attribute;
 use Moose::Role;
 
 use Bread::Board::Types;
+use List::MoreUtils qw(any);
 
 use MooseX::Bread::Board::BlockInjection;
 use MooseX::Bread::Board::ConstructorInjection;
@@ -100,6 +101,11 @@ after _process_options => sub {
     return unless exists $opts->{class}
                || exists $opts->{block}
                || exists $opts->{value};
+
+    # XXX: uggggh
+    return if any { $_ eq 'Moose::Meta::Attribute::Native::Trait::String'
+                 || $_ eq 'Moose::Meta::Attribute::Native::Trait::Counter' }
+              @{ $opts->{traits} };
 
     die "default is not valid when Bread::Board service options are set";
 };
