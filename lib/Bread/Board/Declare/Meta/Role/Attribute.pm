@@ -104,7 +104,7 @@ The service object that is associated with this attribute.
 
 has associated_service => (
     is        => 'rw',
-    isa       => 'Bread::Board::Service',
+    does      => 'Bread::Board::Service',
     predicate => 'has_associated_service',
 );
 
