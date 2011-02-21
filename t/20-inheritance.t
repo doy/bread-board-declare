@@ -54,6 +54,18 @@ use Test::More;
 
 {
     my $parent = Parent->new;
+    ok($parent->has_service('foo'), "parent has foo");
+    ok($parent->has_service('bar'), "parent has bar");
+
+    my $child = Child->new;
+    ok($child->has_service('foo'), "child has foo");
+    ok($child->has_service('bar'), "child has bar");
+    ok($child->has_service('baz'), "child has baz");
+    ok($child->has_service('quux'), "child has quux");
+}
+
+{
+    my $parent = Parent->new;
     isa_ok($parent, 'Bread::Board::Container');
     is($parent->foo, 'FOO');
     is($parent->bar, 'FOOBAR');
