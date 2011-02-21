@@ -2,12 +2,14 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Baz;
     use Moose;
 }
 
+my $i;
 {
     package Foo;
     use Moose;
@@ -31,7 +33,6 @@ use Test::More;
         class => 'Baz',
     );
 
-    my $i = 0;
     has quux => (
         is    => 'ro',
         isa   => 'Str',
@@ -39,6 +40,8 @@ use Test::More;
     );
 }
 
+with_immutable {
+$i = 0;
 {
     my $foo = Foo->new;
     ok($foo->has_service($_), "has service $_")
@@ -75,5 +78,6 @@ use Test::More;
     is($foo->quux, 'XUUQ', "constructor overrides block injections");
     is($foo->quux, 'XUUQ', "and returns the same thing each time");
 }
+} 'Foo';
 
 done_testing;

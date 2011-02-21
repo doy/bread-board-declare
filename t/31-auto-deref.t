@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Foo;
@@ -23,6 +24,7 @@ use Test::More;
     );
 }
 
+with_immutable {
 {
     my $foo = Foo->new;
 
@@ -40,5 +42,6 @@ use Test::More;
     is_deeply(scalar($foo->bar), {'foo', 'bar'}, "scalar hash");
     is_deeply({$foo->foo}, {'foo', 'bar'}, "list hash");
 }
+} 'Foo';
 
 done_testing;

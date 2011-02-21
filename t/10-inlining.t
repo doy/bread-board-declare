@@ -136,6 +136,8 @@ use Test::More;
             number_div => 'div',
         },
     );
+
+    __PACKAGE__->meta->make_immutable;
 }
 
 pass("everything compiled successfully");

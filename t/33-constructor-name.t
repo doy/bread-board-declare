@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Bar;
@@ -22,9 +23,9 @@ use Test::More;
     );
 }
 
-{
+with_immutable {
     my $foo = Foo->new;
     isa_ok($foo->bar, 'Bar');
-}
+} 'Foo';
 
 done_testing;

@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Foo;
@@ -31,9 +32,9 @@ use Test::More;
     );
 }
 
-{
+with_immutable {
     my $foo = Foo->new;
     is($foo->baz, 'BARFOO', "self is passed properly");
-}
+} 'Foo';
 
 done_testing;
