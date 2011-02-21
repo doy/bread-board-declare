@@ -193,7 +193,7 @@ around get_value => sub {
             return wantarray ? %$val : $val;
         }
         else {
-            die 'XXX';
+            die "Can't auto_deref $val.";
         }
     }
     else {
