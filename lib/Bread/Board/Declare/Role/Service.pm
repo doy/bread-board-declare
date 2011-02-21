@@ -1,5 +1,14 @@
 package Bread::Board::Declare::Role::Service;
 use Moose::Role;
+# ABSTRACT: role for Bread::Board::Service objects
+
+=head1 DESCRIPTION
+
+=cut
+
+=attr associated_attribute
+
+=cut
 
 has associated_attribute => (
     is       => 'ro',
@@ -20,6 +29,10 @@ around get => sub {
 
     return $self->$orig(@_);
 };
+
+=method parent_container
+
+=cut
 
 sub parent_container {
     my $self = shift;

@@ -1,8 +1,17 @@
 package Bread::Board::Declare::Meta::Role::Class;
 use Moose::Role;
+# ABSTRACT: class metarole for Bread::Board::Declare
 
 use Bread::Board::Service;
 use List::MoreUtils qw(any);
+
+=head1 DESCRIPTION
+
+=cut
+
+=method get_all_services
+
+=cut
 
 sub get_all_services {
     my $self = shift;

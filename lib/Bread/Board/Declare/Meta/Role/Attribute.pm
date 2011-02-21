@@ -1,6 +1,7 @@
 package Bread::Board::Declare::Meta::Role::Attribute;
 use Moose::Role;
 Moose::Util::meta_attribute_alias('Service');
+# ABSTRACT: attribute metarole for Bread::Board::Declare
 
 use Bread::Board::Types;
 use List::MoreUtils qw(any);
@@ -9,17 +10,33 @@ use Bread::Board::Declare::BlockInjection;
 use Bread::Board::Declare::ConstructorInjection;
 use Bread::Board::Declare::Literal;
 
+=head1 DESCRIPTION
+
+=cut
+
+=attr service
+
+=cut
+
 has service => (
     is      => 'ro',
     isa     => 'Bool',
     default => 1,
 );
 
+=attr block
+
+=cut
+
 has block => (
     is        => 'ro',
     isa       => 'CodeRef',
     predicate => 'has_block',
 );
+
+=attr literal_value
+
+=cut
 
 # has_value is already a method
 has literal_value => (
@@ -29,11 +46,19 @@ has literal_value => (
     predicate => 'has_literal_value',
 );
 
+=attr lifecycle
+
+=cut
+
 has lifecycle => (
     is        => 'ro',
     isa       => 'Str',
     predicate => 'has_lifecycle',
 );
+
+=attr dependencies
+
+=cut
 
 has dependencies => (
     is        => 'ro',
@@ -42,11 +67,19 @@ has dependencies => (
     predicate => 'has_dependencies',
 );
 
+=attr constructor_name
+
+=cut
+
 has constructor_name => (
     is        => 'ro',
     isa       => 'Str',
     predicate => 'has_constructor_name',
 );
+
+=attr associated_service
+
+=cut
 
 has associated_service => (
     is        => 'rw',
