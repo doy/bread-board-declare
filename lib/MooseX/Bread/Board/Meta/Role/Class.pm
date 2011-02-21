@@ -31,6 +31,17 @@ sub get_all_services {
            $self->linearized_isa;
 }
 
+before superclasses => sub {
+    my $self = shift;
+
+    return unless @_;
+    return if any { $_->isa('Bread::Board::Container') } @_;
+
+    die "Cannot inherit from " . join(', ', @_)
+      . " because MooseX::Bread::Board classes must inherit"
+      . " from Bread::Board::Container";
+};
+
 no Moose::Role;
 
 1;
