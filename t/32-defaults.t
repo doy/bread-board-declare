@@ -30,6 +30,16 @@ use Test::Fatal;
        "can't set a default when creating a service");
 
     ::like(::exception {
+        has bar2 => (
+            is      => 'ro',
+            isa     => 'Str',
+            builder => '_build_bar2',
+            value   => 'FOO',
+        );
+    }, qr/builder is not valid when Bread::Board service options are set/,
+       "can't set a builder when creating a service");
+
+    ::like(::exception {
         has baz => (
             is      => 'ro',
             isa     => 'Str',
@@ -50,6 +60,27 @@ use Test::Fatal;
         );
     }, qr/default is not valid when Bread::Board service options are set/,
        "can't set a default when creating a service");
+
+    ::like(::exception {
+        has quux2 => (
+            is      => 'ro',
+            isa     => 'Str',
+            lazy    => 1,
+            builder => '_build_quux2',
+            value   => 'FOO',
+        );
+    }, qr/builder is not valid when Bread::Board service options are set/,
+       "can't set a builder when creating a service");
+
+    ::like(::exception {
+        has quux3 => (
+            is         => 'ro',
+            isa        => 'Str',
+            lazy_build => 1,
+            value      => 'FOO',
+        );
+    }, qr/builder is not valid when Bread::Board service options are set/,
+       "can't set lazy_build when creating a service");
 }
 
 done_testing;

@@ -98,7 +98,8 @@ after _process_options => sub {
     my $class = shift;
     my ($name, $opts) = @_;
 
-    return unless exists $opts->{default};
+    return unless exists $opts->{default}
+               || exists $opts->{builder};
     return unless exists $opts->{class}
                || exists $opts->{block}
                || exists $opts->{value};
@@ -108,7 +109,8 @@ after _process_options => sub {
                  || $_ eq 'Moose::Meta::Attribute::Native::Trait::Counter' }
               @{ $opts->{traits} };
 
-    die "default is not valid when Bread::Board service options are set";
+    my $exists = exists($opts->{default}) ? 'default' : 'builder';
+    die "$exists is not valid when Bread::Board service options are set";
 };
 
 around get_value => sub {
