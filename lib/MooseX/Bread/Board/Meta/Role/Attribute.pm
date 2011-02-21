@@ -40,6 +40,12 @@ has dependencies => (
     predicate => 'has_dependencies',
 );
 
+has constructor_name => (
+    is        => 'ro',
+    isa       => 'Str',
+    predicate => 'has_constructor_name',
+);
+
 after attach_to_class => sub {
     my $self = shift;
 
@@ -54,6 +60,9 @@ after attach_to_class => sub {
             : ()),
         ($self->has_dependencies
             ? (dependencies => $self->dependencies)
+            : ()),
+        ($self->has_constructor_name
+            ? (constructor_name => $self->constructor_name)
             : ()),
     );
 
