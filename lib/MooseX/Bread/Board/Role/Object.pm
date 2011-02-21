@@ -1,6 +1,5 @@
 package MooseX::Bread::Board::Role::Object;
 use Moose::Role;
-use Bread::Board;
 
 has name => (
     is      => 'rw',
@@ -33,7 +32,6 @@ after BUILD => sub {
     }
 };
 
-no Bread::Board;
 no Moose::Role;
 
 1;

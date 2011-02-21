@@ -1,6 +1,8 @@
 package MooseX::Bread::Board;
 use Moose::Exporter;
 
+use Bread::Board ();
+
 my (undef, undef, $init_meta) = Moose::Exporter->build_import_methods(
     install => ['import', 'unimport'],
     class_metaroles => {
