@@ -177,6 +177,12 @@ L<http://search.cpan.org/dist/Bread-Board-Declare>
 
 =back
 
+=begin Pod::Coverage
+
+init_meta
+
+=end Pod::Coverage
+
 =cut
 
 1;

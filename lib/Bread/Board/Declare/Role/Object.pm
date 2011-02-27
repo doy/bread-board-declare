@@ -33,4 +33,14 @@ after BUILD => sub {
 
 no Moose::Role;
 
+=pod
+
+=begin Pod::Coverage
+
+BUILD
+
+=end Pod::Coverage
+
+=cut
+
 1;
