@@ -51,9 +51,9 @@ $i = 0;
     my $foo = Foo->new;
     isa_ok($foo, 'Bread::Board::Container');
     ok($foo->has_service($_), "has service $_")
-        for qw(bar baz quux);
+        for qw(foo bar baz quux);
     ok(!$foo->has_service($_), "doesn't have service $_")
-        for qw(foo baz2);
+        for qw(baz2);
     isa_ok($foo->get_service('bar'), 'Bread::Board::Declare::Literal');
     isa_ok($foo->get_service('baz'), 'Bread::Board::Declare::ConstructorInjection');
     isa_ok($foo->get_service('quux'), 'Bread::Board::Declare::BlockInjection');

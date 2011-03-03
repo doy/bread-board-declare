@@ -127,6 +127,8 @@ after attach_to_class => sub {
             : ()),
     );
 
+    my $tc = $self->has_type_constraint ? $self->type_constraint : undef;
+
     my $service;
     if ($self->has_block) {
         $service = Bread::Board::Declare::BlockInjection->new(
@@ -140,14 +142,21 @@ after attach_to_class => sub {
             value => $self->literal_value,
         );
     }
-    elsif ($self->has_type_constraint) {
-        my $tc = $self->type_constraint;
-        if ($tc->isa('Moose::Meta::TypeConstraint::Class')) {
-            $service = Bread::Board::Declare::ConstructorInjection->new(
-                %params,
-                class => $tc->class,
-            );
-        }
+    elsif ($tc && $tc->isa('Moose::Meta::TypeConstraint::Class')) {
+        $service = Bread::Board::Declare::ConstructorInjection->new(
+            %params,
+            class => $tc->class,
+        );
+    }
+    else {
+        $service = Bread::Board::Declare::BlockInjection->new(
+            %params,
+            block => sub {
+                die "Attribute " . $self->name . " did not specify a service."
+                  . " It must be given a value through the constructor or"
+                  . " writer method before it can be resolved."
+            },
+        );
     }
 
     $self->associated_service($service) if $service;

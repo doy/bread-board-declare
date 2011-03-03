@@ -75,7 +75,8 @@ corresponding to the type constraint.
 
 =item
 
-Otherwise, no service is created.
+Otherwise, a BlockInjection service is created which throws an exception. This allows services to be created for the sole purpose of being set through the attribute, without requiring a default to be specified. Note that
+C<< required => 1 >> is still valid on these attributes.
 
 =back
 
