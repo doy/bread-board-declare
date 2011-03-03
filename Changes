@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.02  2011-03-02
       - more useful handling of attributes that don't explicitly define a
         service: they will get a service that throws an exception if it is
         resolved, which allows the value of that service to be provided by the
