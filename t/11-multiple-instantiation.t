@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Bar;
@@ -32,9 +33,11 @@ use Test::More;
     );
 }
 
+with_immutable {
 my $foo1 = Foo->new;
 is($foo1->bar->foo, 'FOO');
 my $foo2 = Foo->new(foo => 'BAR');
 is($foo2->bar->foo, 'BAR');
+} 'Foo';
 
 done_testing;

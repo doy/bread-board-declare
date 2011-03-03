@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Moose;
 
 {
     package Parent;
@@ -75,6 +76,7 @@ use Test::More;
     );
 }
 
+with_immutable {
 {
     my $obj = Parent->new;
     is($obj->foo, 'parent');
@@ -98,5 +100,6 @@ use Test::More;
     is($obj->foo, 'child');
     is($obj->bar, 'child child');
 }
+} 'Parent', 'Child1', 'Child2', 'Child3';
 
 done_testing;

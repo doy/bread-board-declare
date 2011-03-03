@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Test::More;
 use Test::Fatal;
+use Test::Moose;
 
 {
     package Bar;
@@ -40,6 +41,7 @@ use Test::Fatal;
     );
 }
 
+with_immutable {
 {
     my $foo = Foo->new;
     ok($foo->has_service($_), "has service $_") for qw(foo baz);
@@ -68,5 +70,6 @@ use Test::Fatal;
         "can't depend on attrs with no service"
     );
 }
+} 'Foo';
 
 done_testing;
