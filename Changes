@@ -1,6 +1,7 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+      - oops, i broke inlining for moose 2 at some point
 
 0.02  2011-03-02
       - more useful handling of attributes that don't explicitly define a
