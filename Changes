@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.03  2011-03-04
       - oops, i broke inlining for moose 2 at some point
 
 0.02  2011-03-02
