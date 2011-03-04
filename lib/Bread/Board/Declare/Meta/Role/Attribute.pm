@@ -222,9 +222,9 @@ if (Moose->VERSION > 1.9900) {
                 . '}' . "\n"
                 . 'else {' . "\n"
                     . '$val = ' . $instance . '->get_service(\'' . $self->name . '\')->get;' . "\n"
-                    . $self->_inline_check_constraint(
+                    . join("\n", $self->_inline_check_constraint(
                         '$val', '$type_constraint', '$type_constraint_obj'
-                    )
+                    )) . "\n"
                 . '}' . "\n"
                 . '$val' . "\n"
             . '}';
