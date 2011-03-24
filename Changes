@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.04  2011-03-24
       - resolving dependencies for services should also check the type
         constraint on the associated attribute
 
