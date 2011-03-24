@@ -29,12 +29,17 @@ around get => sub {
     my $self = shift;
 
     my $container = $self->parent_container;
+    my $attr = $self->associated_attribute;
 
-    if ($self->associated_attribute->has_value($container)) {
-        return $self->associated_attribute->get_value($container);
+    if ($attr->has_value($container)) {
+        return $attr->get_value($container);
     }
 
-    return $self->$orig(@_);
+    my $val = $self->$orig(@_);
+    $attr->verify_against_type_constraint($val, instance => $container)
+        if $attr->has_type_constraint;
+
+    return $val;
 };
 
 =method parent_container
