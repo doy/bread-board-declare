@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.05  2011-03-31
       - bump Bread::Board dep
 
 0.04  2011-03-24
