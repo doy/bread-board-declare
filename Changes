@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+      - set the 'class' attribute on block services, so that circular
+        dependencies can work better. (jasonmay)
 
 0.05  2011-03-31
       - bump Bread::Board dep
