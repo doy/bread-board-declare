@@ -131,6 +131,9 @@ after attach_to_class => sub {
 
     my $service;
     if ($self->has_block) {
+        if ($tc && $tc->isa('Moose::Meta::TypeConstraint::Class')) {
+            %params = (%params, class => $tc->class);
+        }
         $service = Bread::Board::Declare::BlockInjection->new(
             %params,
             block => $self->block,
