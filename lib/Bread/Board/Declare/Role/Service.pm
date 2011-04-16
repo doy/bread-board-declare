@@ -24,6 +24,17 @@ has associated_attribute => (
     weak_ref => 1,
 );
 
+=method should_create_typemap
+
+Whether this service will create a type mapping, when it is added to a
+container.
+
+=cut
+
+sub should_create_typemap {
+    return shift->associated_attribute->typemap;
+}
+
 around get => sub {
     my $orig = shift;
     my $self = shift;
