@@ -33,8 +33,7 @@ after BUILD => sub {
             )->infer_service($service->class);
 
             $self->add_service($inferred);
-            $self->add_type_mapping_for($service->class, $inferred)
-                if $service->should_create_typemap;
+            $self->add_type_mapping_for($service->class, $inferred);
 
             $self->add_service(
                 Bread::Board::Service::Alias->new(

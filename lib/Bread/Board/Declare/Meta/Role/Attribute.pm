@@ -108,18 +108,6 @@ has associated_service => (
     predicate => 'has_associated_service',
 );
 
-=attr typemap
-
-Whether or not to create a type mapping for this service. Defaults to true.
-
-=cut
-
-has typemap => (
-    is      => 'rw',
-    isa     => 'Bool',
-    default => 1,
-);
-
 after attach_to_class => sub {
     my $self = shift;
 
