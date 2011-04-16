@@ -124,6 +124,13 @@ use Test::Fatal;
     isa_ok($c->baz, 'Baz2');
     isa_ok($c->baz->foo, 'Foo');
     isa_ok($c->baz->bar, 'Bar');
+
+    is(
+        $c->fetch('baz')->get_dependency('foo')->service,
+        $c->fetch('foo'),
+        "inferred the right dependency"
+    );
+
     is($c->baz->foo->data, 'THING',
        "inference finds services in the container");
     is($c->baz->thing, 'THING', "partial dependency specification works");
@@ -183,6 +190,60 @@ use Test::Fatal;
 
     is($c->quux->foo, undef, "non-required attrs are not inferred");
     is($c->quux2->foo->data, 'DATA', "but can be explicitly specified");
+}
+
+{
+    package State;
+    use Moose;
+
+    has counter => (
+        traits  => ['Counter'],
+        is      => 'rw',
+        isa     => 'Int',
+        handles => { inc => 'inc' },
+        default => 0,
+    );
+}
+
+{
+    package Controller;
+    use Moose;
+
+    has counter => (
+        is       => 'ro',
+        isa      => 'State',
+        required => 1,
+        handles  => { inc => 'inc', counter_val => 'counter' },
+    );
+}
+
+{
+    package App;
+    use Moose;
+    use Bread::Board::Declare;
+
+    has counter => (
+        is        => 'ro',
+        isa       => 'State',
+        lifecycle => 'Singleton',
+    );
+
+    has controller => (
+        is  => 'ro',
+        isa => 'Controller',
+    );
+}
+
+{
+    my $c = App->new;
+    is(
+        $c->fetch('controller')->get_dependency('counter')->service,
+        $c->fetch('counter'),
+        "inferred the right dependency"
+    );
+    $c->controller->inc;
+    $c->controller->inc;
+    is($c->controller->counter_val, 2, "state persisted as a singleton");
 }
 
 done_testing;
