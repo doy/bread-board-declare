@@ -14,6 +14,11 @@ after BUILD => sub {
 
     my $meta = Class::MOP::class_of($self);
 
+    my %seen = (
+        map { $_->class => $_->name }
+            grep { $_->isa('Bread::Board::Declare::ConstructorInjection') && Class::MOP::class_of($_->class) }
+                 $meta->get_all_services
+    );
     for my $service ($meta->get_all_services) {
         if ($service->isa('Bread::Board::Declare::BlockInjection')) {
             my $block = $service->block;
@@ -30,7 +35,7 @@ after BUILD => sub {
             my $inferred = Bread::Board::Service::Inferred->new(
                 current_container => $self,
                 service           => $service->clone,
-            )->infer_service($service->class);
+            )->infer_service($service->class, \%seen);
 
             $self->add_service($inferred);
             $self->add_type_mapping_for($service->class, $inferred);
