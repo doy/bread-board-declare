@@ -29,8 +29,14 @@ after BUILD => sub {
             && (my $meta = Class::MOP::class_of($service->class))) {
             my $inferred = Bread::Board::Service::Inferred->new(
                 current_container => $self,
+                # XXX: this is kinda ugly, maybe ::Inferred should be able to
+                # also take a 'prototype' service, rather than just args?
                 service_args      => {
-                    dependencies => $service->dependencies,
+                    constructor_name => $service->constructor_name,
+                    dependencies     => $service->dependencies,
+                    $service->lifecycle
+                        ? (lifecycle => $service->lifecycle)
+                        : (),
                 },
             )->infer_service($service->class);
 
