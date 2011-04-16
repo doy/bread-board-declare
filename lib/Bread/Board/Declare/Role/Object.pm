@@ -29,24 +29,18 @@ after BUILD => sub {
             && (my $meta = Class::MOP::class_of($service->class))) {
             my $inferred = Bread::Board::Service::Inferred->new(
                 current_container => $self,
+                service_args      => {
+                    dependencies => $service->dependencies,
+                },
             )->infer_service($service->class);
 
-            my %deps = (
-                %{ $inferred->dependencies },
-                %{ $service->dependencies },
-            );
-
-            my $type_service = $inferred->clone(
-                dependencies => \%deps,
-            );
-
-            $self->add_service($type_service);
-            $self->add_type_mapping_for($service->class, $type_service);
+            $self->add_service($inferred);
+            $self->add_type_mapping_for($service->class, $inferred);
 
             $self->add_service(
                 Bread::Board::Service::Alias->new(
                     name              => $service->name,
-                    aliased_from_path => $type_service->name,
+                    aliased_from_path => $inferred->name,
                 )
             );
         }
