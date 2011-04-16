@@ -27,6 +27,7 @@ after BUILD => sub {
         }
         elsif ($service->isa('Bread::Board::Declare::ConstructorInjection')
             && (my $meta = Class::MOP::class_of($service->class))) {
+            $service = $service->clone;
             my $inferred = Bread::Board::Service::Inferred->new(
                 current_container => $self,
                 # XXX: this is kinda ugly, maybe ::Inferred should be able to
