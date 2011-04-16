@@ -54,9 +54,9 @@ $i = 0;
         for qw(foo bar baz quux);
     ok(!$foo->has_service($_), "doesn't have service $_")
         for qw(baz2);
-    isa_ok($foo->get_service('bar'), 'Bread::Board::Declare::Literal');
-    isa_ok($foo->get_service('baz'), 'Bread::Board::Declare::ConstructorInjection');
-    isa_ok($foo->get_service('quux'), 'Bread::Board::Declare::BlockInjection');
+    isa_ok($foo->fetch('bar'), 'Bread::Board::Declare::Literal');
+    isa_ok($foo->fetch('baz'), 'Bread::Board::Declare::ConstructorInjection');
+    isa_ok($foo->fetch('quux'), 'Bread::Board::Declare::BlockInjection');
 }
 
 {
