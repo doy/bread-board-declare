@@ -25,6 +25,31 @@ after BUILD => sub {
                 )
             );
         }
+        elsif ($service->isa('Bread::Board::Declare::ConstructorInjection')
+            && (my $meta = Class::MOP::class_of($service->class))) {
+            my $inferred = Bread::Board::Service::Inferred->new(
+                current_container => $self,
+            )->infer_service($service->class);
+
+            my %deps = (
+                %{ $inferred->dependencies },
+                %{ $service->dependencies },
+            );
+
+            my $type_service = $inferred->clone(
+                dependencies => \%deps,
+            );
+
+            $self->add_service($type_service);
+            $self->add_type_mapping_for($service->class, $type_service);
+
+            $self->add_service(
+                Bread::Board::Service::Alias->new(
+                    name              => $service->name,
+                    aliased_from_path => $type_service->name,
+                )
+            );
+        }
         else {
             $self->add_service($service->clone);
         }
