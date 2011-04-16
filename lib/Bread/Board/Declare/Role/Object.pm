@@ -40,6 +40,12 @@ after BUILD => sub {
                 },
             )->infer_service($service->class);
 
+            # XXX: the above comment would also make this unnecessary
+            Bread::Board::Declare::ConstructorInjection->meta->rebless_instance(
+                $inferred,
+                associated_attribute => $service->associated_attribute,
+            );
+
             $self->add_service($inferred);
             $self->add_type_mapping_for($service->class, $inferred)
                 if $service->should_create_typemap;
