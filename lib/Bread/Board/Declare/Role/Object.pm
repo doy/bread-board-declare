@@ -34,13 +34,6 @@ after BUILD => sub {
 
             $self->add_service($inferred);
             $self->add_type_mapping_for($service->class, $inferred);
-
-            $self->add_service(
-                Bread::Board::Service::Alias->new(
-                    name              => $service->name,
-                    aliased_from_path => $inferred->name,
-                )
-            );
         }
         else {
             $self->add_service($service->clone);
