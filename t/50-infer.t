@@ -7,6 +7,12 @@ use Test::Fatal;
 {
     package Foo;
     use Moose;
+
+    has data => (
+        is      => 'ro',
+        isa     => 'Str',
+        default => 'FOO',
+    );
 }
 
 {
@@ -29,23 +35,17 @@ use Test::Fatal;
         isa      => 'Bar',
         required => 1,
     );
+
+    has thing => (
+        is  => 'ro',
+        isa => 'Str',
+    );
 }
 
 {
     package My::Container;
     use Moose;
     use Bread::Board::Declare;
-
-    has foo => (
-        is    => 'ro',
-        isa   => 'Foo',
-        block => sub { Foo->new },
-    );
-
-    has bar => (
-        is  => 'ro',
-        isa => 'Bar',
-    );
 
     has baz => (
         is  => 'ro',
@@ -58,6 +58,11 @@ use Test::Fatal;
     isa_ok($c->baz, 'Baz');
     isa_ok($c->baz->foo, 'Foo');
     isa_ok($c->baz->bar, 'Bar');
+
+    is($c->baz->thing, undef, "right thing");
+    is($c->baz->foo->data, 'FOO', "right data");
+
+    isa_ok($c->resolve(type => 'Baz'), 'Baz');
 }
 
 {
@@ -66,9 +71,7 @@ use Test::Fatal;
 
     extends 'Baz';
 
-    has thing => (
-        is       => 'ro',
-        isa      => 'Str',
+    has '+thing' => (
         required => 1,
     );
 }
@@ -77,16 +80,6 @@ use Test::Fatal;
     package My::Container2;
     use Moose;
     use Bread::Board::Declare;
-
-    has foo => (
-        is  => 'ro',
-        isa => 'Foo',
-    );
-
-    has bar => (
-        is  => 'ro',
-        isa => 'Bar',
-    );
 
     has baz => (
         is  => 'ro',
@@ -107,20 +100,16 @@ use Test::Fatal;
     use Moose;
     use Bread::Board::Declare;
 
-    has foo => (
-        is  => 'ro',
-        isa => 'Foo',
-    );
-
-    has bar => (
-        is  => 'ro',
-        isa => 'Bar',
-    );
-
     has thing => (
         is    => 'ro',
         isa   => 'Str',
         value => 'THING',
+    );
+
+    has foo => (
+        is           => 'ro',
+        isa          => 'Foo',
+        dependencies => { data => 'thing' },
     );
 
     has baz => (
@@ -135,7 +124,25 @@ use Test::Fatal;
     isa_ok($c->baz, 'Baz2');
     isa_ok($c->baz->foo, 'Foo');
     isa_ok($c->baz->bar, 'Bar');
+    is($c->baz->foo->data, 'THING',
+       "inference finds services in the container");
     is($c->baz->thing, 'THING', "partial dependency specification works");
+}
+
+{
+    package Quux;
+    use Moose;
+
+    has baz => (
+        is       => 'ro',
+        isa      => 'Baz',
+        required => 1,
+    );
+
+    has foo => (
+        is  => 'ro',
+        isa => 'Foo',
+    );
 }
 
 {
@@ -143,81 +150,39 @@ use Test::Fatal;
     use Moose;
     use Bread::Board::Declare;
 
-    has foo => (
+    has data => (
+        is    => 'ro',
+        isa   => 'Str',
+        value => 'DATA',
+    );
+
+    has quux => (
         is  => 'ro',
-        isa => 'Foo',
+        isa => 'Quux',
     );
-
-    has other_foo => (
-        is  => 'ro',
-        isa => 'Foo',
-    );
-
-    has bar => (
-        is  => 'ro',
-        isa => 'Bar',
-    );
-
-    has baz => (
-        is  => 'ro',
-        isa => 'Baz',
-    );
-}
-
-{
-    like(
-        exception { My::Container4->new },
-        qr/^You have already declared a typemap for type Foo/,
-        "correct error when inferring is ambiguous"
-    );
-}
-
-{
-    package Foo2;
-    use Moose;
-
-    extends 'Foo';
-
-    has bar => (
-        is       => 'ro',
-        isa      => 'Bar',
-        required => 1,
-    );
-}
-
-{
-    package My::Container5;
-    use Moose;
-    use Bread::Board::Declare;
 
     has foo => (
-        is  => 'ro',
-        isa => 'Foo2',
+        is           => 'ro',
+        isa          => 'Foo',
+        dependencies => ['data'],
     );
 
-    has other_foo => (
-        is      => 'ro',
-        isa     => 'Foo2',
-        typemap => 0,
-    );
-
-    has bar => (
-        is  => 'ro',
-        isa => 'Bar',
-    );
-
-    has baz => (
-        is  => 'ro',
-        isa => 'Baz',
+    has quux2 => (
+        is           => 'ro',
+        isa          => 'Quux',
+        dependencies => ['foo'],
     );
 }
 
 {
-    my $c = My::Container5->new;
-    isa_ok($c->baz, 'Baz');
-    isa_ok($c->baz->foo, 'Foo');
-    isa_ok($c->baz->bar, 'Bar');
-    isa_ok($c->other_foo->bar, 'Bar');
+    my $c = My::Container4->new;
+    isa_ok($c->quux, 'Quux');
+    isa_ok($c->quux->baz, 'Baz');
+    isa_ok($c->quux->baz->foo, 'Foo');
+    isa_ok($c->quux->baz->bar, 'Bar');
+
+    is($c->quux->foo, undef, "non-required attrs are not inferred");
+    is($c->quux2->foo->data, 'DATA', "but can be explicitly specified");
 }
 
 done_testing;
