@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.07  2011-04-26
       - fix test suite for upcoming moose error message changes
 
 0.06  2011-04-02
