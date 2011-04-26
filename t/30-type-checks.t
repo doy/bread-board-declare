@@ -19,7 +19,7 @@ use Test::Moose;
     has bar => (
         is    => 'ro',
         isa   => 'Str',
-        block => sub { {} },
+        block => sub { { foo => 'bar' } },
     );
 
     has baz => (
@@ -33,13 +33,13 @@ use Test::Moose;
 with_immutable {
     my $foo = Foo->new;
     like(exception { $foo->foo },
-        qr/^Attribute \(foo\) does not pass the type constraint because: Validation failed for 'Ref' with value FOO/,
+        qr/^Attribute \(foo\) does not pass the type constraint because: Validation failed for 'Ref' with value .*FOO/,
          "error when service returns invalid value");
     like(exception { $foo->bar },
-        qr/^Attribute \(bar\) does not pass the type constraint because: Validation failed for 'Str' with value HASH/,
+        qr/^Attribute \(bar\) does not pass the type constraint because: Validation failed for 'Str' with value .*(?:HASH|foo.*bar)/,
          "error when service returns invalid value");
     like(exception { $foo->baz },
-        qr/^Attribute \(bar\) does not pass the type constraint because: Validation failed for 'Str' with value HASH/,
+        qr/^Attribute \(bar\) does not pass the type constraint because: Validation failed for 'Str' with value .*(?:HASH|foo.*bar)/,
          "error when service returns invalid value, even as a dependency");
 } 'Foo';
 

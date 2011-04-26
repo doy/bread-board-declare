@@ -2,6 +2,9 @@ Revision history for Bread-Board-Declare
 
 {{$NEXT}}
 
+0.07  2011-04-26
+      - fix test suite for upcoming moose error message changes
+
 0.06  2011-04-02
       - set the 'class' attribute on block services, so that circular
         dependencies can work better. (jasonmay)
