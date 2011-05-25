@@ -52,6 +52,11 @@ use Test::Fatal;
         isa   => 'Baz',
         infer => 1,
     );
+
+    has baz_no_infer => (
+        is  => 'ro',
+        isa => 'Baz',
+    );
 }
 
 {
@@ -64,6 +69,15 @@ use Test::Fatal;
     is($c->baz->foo->data, 'FOO', "right data");
 
     isa_ok($c->resolve(type => 'Baz'), 'Baz');
+}
+
+{
+    my $c = My::Container->new;
+    like(
+        exception { $c->baz_no_infer },
+        qr/^Attribute \(bar\) is required/,
+        "not inferred when not requested"
+    );
 }
 
 {
