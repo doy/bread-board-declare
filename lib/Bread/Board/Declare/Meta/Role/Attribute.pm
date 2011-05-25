@@ -226,7 +226,11 @@ if (Moose->VERSION > 1.9900) {
                 . 'else {' . "\n"
                     . '$val = ' . $instance . '->get_service(\'' . $self->name . '\')->get;' . "\n"
                     . join("\n", $self->_inline_check_constraint(
-                        '$val', '$type_constraint', '$type_constraint_obj'
+                        '$val',
+                        '$type_constraint',
+                        (Moose->VERSION >= 2.0100
+                            ? '$type_message'
+                            : '$type_constraint_obj'),
                     )) . "\n"
                 . '}' . "\n"
                 . '$val' . "\n"
