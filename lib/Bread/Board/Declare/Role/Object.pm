@@ -31,6 +31,7 @@ after BUILD => sub {
             );
         }
         elsif ($service->isa('Bread::Board::Declare::ConstructorInjection')
+            && $service->associated_attribute->infer
             && (my $meta = Class::MOP::class_of($service->class))) {
             my $inferred = Bread::Board::Service::Inferred->new(
                 current_container => $self,

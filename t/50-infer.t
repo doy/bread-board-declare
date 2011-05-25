@@ -48,8 +48,9 @@ use Test::Fatal;
     use Bread::Board::Declare;
 
     has baz => (
-        is  => 'ro',
-        isa => 'Baz',
+        is    => 'ro',
+        isa   => 'Baz',
+        infer => 1,
     );
 }
 
@@ -82,8 +83,9 @@ use Test::Fatal;
     use Bread::Board::Declare;
 
     has baz => (
-        is  => 'ro',
-        isa => 'Baz2',
+        is    => 'ro',
+        isa   => 'Baz2',
+        infer => 1,
     );
 }
 
@@ -115,6 +117,7 @@ use Test::Fatal;
     has baz => (
         is           => 'ro',
         isa          => 'Baz2',
+        infer        => 1,
         dependencies => ['thing'],
     );
 }
@@ -164,8 +167,9 @@ use Test::Fatal;
     );
 
     has quux => (
-        is  => 'ro',
-        isa => 'Quux',
+        is    => 'ro',
+        isa   => 'Quux',
+        infer => 1,
     );
 
     has foo => (
@@ -177,6 +181,7 @@ use Test::Fatal;
     has quux2 => (
         is           => 'ro',
         isa          => 'Quux',
+        infer        => 1,
         dependencies => ['foo'],
     );
 }
@@ -229,8 +234,9 @@ use Test::Fatal;
     );
 
     has controller => (
-        is  => 'ro',
-        isa => 'Controller',
+        is    => 'ro',
+        isa   => 'Controller',
+        infer => 1,
     );
 }
 

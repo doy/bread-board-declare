@@ -83,6 +83,20 @@ has dependencies => (
     predicate => 'has_dependencies',
 );
 
+=attr infer
+
+If true, the dependency list will be inferred as much as possible from the
+attributes in the class. See L<Bread::Board::Manual::Concepts::Typemap> for
+more information. Note that this is only valid for constructor injection
+services.
+
+=cut
+
+has infer => (
+    is  => 'ro',
+    isa => 'Bool',
+);
+
 =attr constructor_name
 
 The constructor name to use when creating L<Bread::Board::ConstructorInjection>
