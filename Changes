@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.08  2011-06-01
       - allow inferring dependencies for constructor injection services
         (infer => 1 in the attribute definition)
 
