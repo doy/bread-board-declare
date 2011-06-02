@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.09  2011-06-02
       - make sure coercions are run in all cases (rafl)
 
 0.08  2011-06-01
