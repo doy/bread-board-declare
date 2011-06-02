@@ -212,8 +212,12 @@ around get_value => sub {
 
     my $val = $instance->get_service($self->name)->get;
 
-    $self->verify_against_type_constraint($val, instance => $instance)
-        if $self->has_type_constraint;
+    if ($self->has_type_constraint) {
+        $val = $self->type_constraint->coerce($val)
+            if $self->should_coerce;
+
+        $self->verify_against_type_constraint($val, instance => $instance);
+    }
 
     if ($self->should_auto_deref) {
         if (ref($val) eq 'ARRAY') {
