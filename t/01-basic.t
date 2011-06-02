@@ -13,6 +13,7 @@ my $i;
 {
     package Foo;
     use Moose;
+    use Moose::Util::TypeConstraints;
     use Bread::Board::Declare;
 
     has foo => (
@@ -21,10 +22,14 @@ my $i;
         default => 'FOO',
     );
 
+    subtype 'ArrayRefOfStr', as 'ArrayRef[Str]';
+    coerce 'ArrayRefOfStr', from 'Str', via { [$_] };
+
     has bar => (
-        is    => 'ro',
-        isa   => 'Str',
-        value => 'BAR',
+        is     => 'ro',
+        isa    => 'ArrayRefOfStr',
+        coerce => 1,
+        value  => 'BAR',
     );
 
     has baz => (
@@ -62,7 +67,7 @@ $i = 0;
 {
     my $foo = Foo->new;
     is($foo->foo, 'FOO', "normal attrs work");
-    is($foo->bar, 'BAR', "literals work");
+    is_deeply($foo->bar, ['BAR'], "literals work");
     isa_ok($foo->baz, 'Baz');
     isnt($foo->baz, $foo->baz, "new instance each time");
     is($foo->quux, 'QUUX0', "block injections work");
@@ -78,7 +83,7 @@ $i = 0;
         quux => 'XUUQ',
     );
     is($foo->foo, 'OOF', "normal attrs work from constructor");
-    is($foo->bar, 'RAB', "constructor overrides literals");
+    is_deeply($foo->bar, ['RAB'], "constructor overrides literals");
     isa_ok($foo->baz, 'Baz');
     is($foo->baz, $baz, "constructor overrides constructor injections");
     is($foo->baz, $foo->baz, "and returns the same thing each time");
