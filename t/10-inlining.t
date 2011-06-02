@@ -14,7 +14,7 @@ use Test::More;
         accessor  => 'foo',
         predicate => 'has_foo',
         clearer   => 'clear_foo',
-        value     => 'foo',
+        value     => sub { 'foo' },
     );
 
     has bool => (

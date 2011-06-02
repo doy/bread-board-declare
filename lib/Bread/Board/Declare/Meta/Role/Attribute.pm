@@ -157,7 +157,9 @@ after attach_to_class => sub {
     elsif ($self->has_literal_value) {
         $service = Bread::Board::Declare::Literal->new(
             %params,
-            value => $self->literal_value,
+            value => (ref $self->literal_value
+                          ? $self->literal_value->($self)
+                          : $self->literal_value),
         );
     }
     elsif ($tc && $tc->isa('Moose::Meta::TypeConstraint::Class')) {
