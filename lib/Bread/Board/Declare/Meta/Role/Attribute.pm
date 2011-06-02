@@ -51,7 +51,7 @@ the parameter that should be passed to C<has> is C<value>.
 # has_value is already a method
 has literal_value => (
     is        => 'ro',
-    isa       => 'Str|CodeRef',
+    isa       => 'Value',
     init_arg  => 'value',
     predicate => 'has_literal_value',
 );
