@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.10  2011-07-27
       - bump Bread::Board prereq due to a bug
       - allow specifying parameters for services
       - inferring services should just set up parameters, not die
