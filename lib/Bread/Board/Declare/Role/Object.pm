@@ -36,6 +36,7 @@ after BUILD => sub {
             my $inferred = Bread::Board::Service::Inferred->new(
                 current_container => $self,
                 service           => $service->clone,
+                infer_params      => 1,
             )->infer_service($service->class, \%seen);
 
             $self->add_service($inferred);

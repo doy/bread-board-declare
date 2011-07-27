@@ -104,10 +104,24 @@ use Test::Fatal;
 }
 
 {
+    my $c;
+    is(exception { $c = My::Container2->new }, undef,
+       "no error when not everything can be inferred");
     like(
-        exception { My::Container2->new },
-        qr/^Only class types, role types, or subtypes of Object can be inferred\. I don't know what to do with type \(Str\)/,
-        "correct error when not everything can be inferred"
+        exception { $c->baz },
+        qr/Mandatory parameter 'thing' missing/,
+        "error when resolving a service with unfulfilled parameters"
+    );
+    is(
+        exception {
+            my $baz = $c->resolve(
+                service => 'baz',
+                parameters => { thing => "THING" },
+            );
+            is($baz->thing, 'THING', "parameter provided correctly");
+        },
+        undef,
+        "no errors when parameters are given"
     );
 }
 
