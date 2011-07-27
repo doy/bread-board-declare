@@ -83,6 +83,19 @@ has dependencies => (
     predicate => 'has_dependencies',
 );
 
+=attr parameters
+
+The parameter specification to use when creating the service. See L<Bread::Board::Service::WithParameters>.
+
+=cut
+
+has parameters => (
+    is        => 'ro',
+    isa       => 'Bread::Board::Service::Parameters',
+    coerce    => 1,
+    predicate => 'has_parameters',
+);
+
 =attr infer
 
 If true, the dependency list will be inferred as much as possible from the
@@ -135,6 +148,9 @@ after attach_to_class => sub {
             : ()),
         ($self->has_dependencies
             ? (dependencies => $self->dependencies)
+            : ()),
+        ($self->has_parameters
+            ? (parameters => $self->parameters)
             : ()),
         ($self->has_constructor_name
             ? (constructor_name => $self->constructor_name)
