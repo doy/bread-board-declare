@@ -117,6 +117,7 @@ become services, as in:
 =cut
 
 my (undef, undef, $init_meta) = Moose::Exporter->build_import_methods(
+    as_is => ['dep'],
     install => ['import', 'unimport'],
     class_metaroles => {
         attribute => ['Bread::Board::Declare::Meta::Role::Attribute'],
@@ -143,6 +144,34 @@ sub init_meta {
         }
     }
     $package->$init_meta(%options);
+}
+
+sub dep {
+    if (@_ > 1) {
+        my %opts = (
+            name => '__ANON__',
+            @_,
+        );
+
+        if (exists $opts{dependencies}) {
+            confess("Dependencies are not supported for inline services");
+        }
+
+        if (exists $opts{value}) {
+            return Bread::Board::Literal->new(%opts);
+        }
+        elsif (exists $opts{block}) {
+            return Bread::Board::BlockInjection->new(%opts);
+        }
+        elsif (exists $opts{class}) {
+            return Bread::Board::ConstructorInjection->new(%opts);
+        }
+        else {
+        }
+    }
+    else {
+        return Bread::Board::Dependency->new(service_path => $_[0]);
+    }
 }
 
 =head1 BUGS
