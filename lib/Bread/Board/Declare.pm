@@ -26,6 +26,9 @@ use Bread::Board ();
   has tt => (
       is  => 'ro',
       isa => 'MyApp::View::TT',
+      dependencies => {
+          template_root => dep(value => './root/templates'),
+      },
   );
 
   has controller => (
@@ -145,6 +148,33 @@ sub init_meta {
     }
     $package->$init_meta(%options);
 }
+
+=head1 EXPORTS
+
+=head2 dep
+
+  dependencies => {
+      foo => dep('foo'),
+      bar => dep(value => 'bar'),
+  }
+
+This is a helper function for specifying dependency lists. Passing a single
+argument will explicitly mark it as a dependency to be resolved by looking it
+up in the container. This isn't strictly necessary (the dependency
+specifications for L<Bread::Board> have a coercion which does this
+automatically), but being explicit can be easier to understand at times.
+
+This function can also take a hash of arguments. In that case, an anonymous
+service is created to satisfy the dependency. The hash is passed directly to
+the constructor for the appropriate service: if the C<value> parameter is
+passed, a L<Bread::Board::Literal> service will be created, if the C<block>
+parameter is passed, a L<Bread::Board::BlockInjection> service will be created,
+and if the C<class> parameter is passed, a
+L<Bread::Board::ConstructorInjection> service will be created. Note that these
+anonymous services cannot have dependencies themselves, nor can they be
+depended on by other services.
+
+=cut
 
 sub dep {
     if (@_ > 1) {
