@@ -16,7 +16,7 @@ after BUILD => sub {
 
     my %seen = (
         map { $_->class => $_->name }
-            grep { $_->isa('Bread::Board::Declare::ConstructorInjection') && Class::MOP::class_of($_->class) }
+            grep { $_->does('Bread::Board::Service::WithClass') }
                  $meta->get_all_services
     );
     for my $service ($meta->get_all_services) {
