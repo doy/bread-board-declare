@@ -16,7 +16,7 @@ after BUILD => sub {
 
     my %seen = (
         map { $_->class => $_->name }
-            grep { $_->does('Bread::Board::Service::WithClass') }
+            grep { $_->does('Bread::Board::Service::WithClass') && $_->has_class }
                  $meta->get_all_services
     );
     for my $service ($meta->get_all_services) {
