@@ -5,6 +5,9 @@ use Moose::Role;
 use List::MoreUtils 'any';
 use Moose::Util 'does_role', 'find_meta';
 
+use Bread::Board::Declare::Meta::Role::Attribute::Container;
+use Bread::Board::Declare::Meta::Role::Attribute::Service;
+
 =attr service
 
 Whether or not to create a service for this attribute. Defaults to true.
@@ -28,14 +31,14 @@ around interpolate_class => sub {
     return $class->$orig(@_)
         if $options->{metaclass};
 
-    if (exists $options->{service} && !$options->{service}) {
-        return $class->$orig(@_);
-    }
+    return $class->$orig(@_)
+        if exists $options->{service} && !$options->{service};
 
     my ($new_class, @traits) = $class->$orig(@_);
 
     return wantarray ? ($new_class, @traits) : $new_class
-        if does_role($new_class, 'Bread::Board::Declare::Meta::Role::Attribute::Service');
+        if does_role($new_class, 'Bread::Board::Declare::Meta::Role::Attribute::Service')
+        || does_role($new_class, 'Bread::Board::Declare::Meta::Role::Attribute::Container');
 
     my $parent = @traits
         ? (find_meta($new_class)->superclasses)[0]

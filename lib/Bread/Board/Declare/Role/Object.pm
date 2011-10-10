@@ -1,6 +1,8 @@
 package Bread::Board::Declare::Role::Object;
 use Moose::Role;
 
+use Moose::Util 'does_role';
+
 has name => (
     is      => 'rw',
     isa     => 'Str',
@@ -45,6 +47,26 @@ after BUILD => sub {
         else {
             $self->add_service($service->clone);
         }
+    }
+
+    for my $attr (grep { does_role($_, 'Bread::Board::Declare::Meta::Role::Attribute::Container') } $meta->get_all_attributes) {
+        my $container;
+        if ($attr->has_value($self) || $attr->has_default || $attr->has_builder) {
+            $container = $attr->get_value($self);
+        }
+        else {
+            my $s = Bread::Board::ConstructorInjection->new(
+                name         => '__ANON__',
+                parent       => $self,
+                class        => $attr->type_constraint->class,
+                ($attr->has_dependencies
+                    ? (dependencies => $attr->dependencies)
+                    : ()),
+            );
+            $container = $s->get;
+        }
+        $container->name($attr->name);
+        $self->add_sub_container($container);
     }
 };
 
