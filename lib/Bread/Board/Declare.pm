@@ -85,8 +85,9 @@ C<< required => 1 >> is still valid on these attributes.
 
 Constructor parameters for services (C<dependencies>, C<lifecycle>, etc) can
 also be passed into the attribute definition; these will be forwarded to the
-service constructor. See L<Bread::Board::Declare::Meta::Role::Attribute> for
-a full list of additional parameters to C<has>.
+service constructor. See
+L<Bread::Board::Declare::Meta::Role::Attribute::Service> for a full list of
+additional parameters to C<has>.
 
 If C<< infer => 1 >> is passed in the attribute definition, the class in the
 type constraint will be introspected to find its required dependencies, and
