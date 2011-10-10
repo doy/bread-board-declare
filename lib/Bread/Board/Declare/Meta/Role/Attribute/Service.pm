@@ -23,12 +23,6 @@ Whether or not to create a service for this attribute. Defaults to true.
 
 =cut
 
-has service => (
-    is      => 'ro',
-    isa     => 'Bool',
-    default => 1,
-);
-
 =attr block
 
 The block to use when creating a L<Bread::Board::BlockInjection> service.
@@ -137,8 +131,6 @@ has associated_service => (
 
 after attach_to_class => sub {
     my $self = shift;
-
-    return unless $self->service;
 
     my %params = (
         associated_attribute => $self,

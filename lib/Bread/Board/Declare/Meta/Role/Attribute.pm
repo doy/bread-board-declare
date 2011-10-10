@@ -15,6 +15,11 @@ around interpolate_class => sub {
     return $class->$orig(@_)
         if $options->{metaclass};
 
+    if (exists $options->{service} && !$options->{service}) {
+        delete $options->{service};
+        return $class->$orig(@_);
+    }
+
     my ($new_class, @traits) = $class->$orig(@_);
 
     return wantarray ? ($new_class, @traits) : $new_class
