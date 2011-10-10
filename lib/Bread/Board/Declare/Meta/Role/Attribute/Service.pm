@@ -124,9 +124,8 @@ The service object that is associated with this attribute.
 =cut
 
 has associated_service => (
-    is        => 'rw',
-    does      => 'Bread::Board::Service',
-    predicate => 'has_associated_service',
+    is   => 'rw',
+    does => 'Bread::Board::Service',
 );
 
 after attach_to_class => sub {
@@ -186,7 +185,7 @@ after attach_to_class => sub {
         );
     }
 
-    $self->associated_service($service) if $service;
+    $self->associated_service($service);
 };
 
 after _process_options => sub {

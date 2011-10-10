@@ -21,7 +21,6 @@ Returns all of the services that are associated with attributes in this class.
 sub get_all_services {
     my $self = shift;
     return map { $_->associated_service }
-           grep { $_->has_associated_service }
            grep { Moose::Util::does_role($_, 'Bread::Board::Declare::Meta::Role::Attribute::Service') }
            $self->get_all_attributes;
 }
