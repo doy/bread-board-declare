@@ -53,19 +53,31 @@ after BUILD => sub {
         my $container;
         if ($attr->has_value($self) || $attr->has_default || $attr->has_builder) {
             $container = $attr->get_value($self);
+            $container->name($attr->name);
         }
         else {
+            my $dependencies = $attr->has_dependencies
+                ? $attr->dependencies
+                : {};
+
+            if (!exists $dependencies->{name}) {
+                my $name_dep = Bread::Board::Dependency->new(
+                    service => Bread::Board::Literal->new(
+                        name  => '__ANON__',
+                        value => $attr->name,
+                    ),
+                );
+                $dependencies->{name} = $name_dep;
+            }
+
             my $s = Bread::Board::ConstructorInjection->new(
                 name         => '__ANON__',
                 parent       => $self,
                 class        => $attr->type_constraint->class,
-                ($attr->has_dependencies
-                    ? (dependencies => $attr->dependencies)
-                    : ()),
+                dependencies => $dependencies,
             );
             $container = $s->get;
         }
-        $container->name($attr->name);
         $self->add_sub_container($container);
     }
 };
