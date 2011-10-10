@@ -76,7 +76,9 @@ after BUILD => sub {
                 class        => $attr->type_constraint->class,
                 dependencies => $dependencies,
             );
-            $container = $s->get;
+            # need to clone this here to ensure the dependencies are also
+            # cloned
+            $container = $s->clone->get;
         }
         $self->add_sub_container($container);
     }
