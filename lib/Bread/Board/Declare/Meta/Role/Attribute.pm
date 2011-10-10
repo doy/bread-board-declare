@@ -1,8 +1,21 @@
 package Bread::Board::Declare::Meta::Role::Attribute;
 use Moose::Role;
+# ABSTRACT: base attribute metarole for Bread::Board::Declare
 
 use List::MoreUtils 'any';
 use Moose::Util 'does_role', 'find_meta';
+
+=attr service
+
+Whether or not to create a service for this attribute. Defaults to true.
+
+=cut
+
+has service => (
+    is      => 'ro',
+    isa     => 'Bool',
+    default => 1,
+);
 
 # this is kinda gross, but it's the only way to hook in at the right place
 # at the moment, it seems
@@ -16,7 +29,6 @@ around interpolate_class => sub {
         if $options->{metaclass};
 
     if (exists $options->{service} && !$options->{service}) {
-        delete $options->{service};
         return $class->$orig(@_);
     }
 

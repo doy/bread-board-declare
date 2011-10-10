@@ -1,7 +1,7 @@
 package Bread::Board::Declare::Meta::Role::Attribute::Service;
 use Moose::Role;
 Moose::Util::meta_attribute_alias('Service');
-# ABSTRACT: attribute metarole for Bread::Board::Declare
+# ABSTRACT: attribute metarole for service attributes in Bread::Board::Declare
 
 use Bread::Board::Types;
 use List::MoreUtils qw(any);
@@ -14,12 +14,6 @@ use Bread::Board::Declare::Literal;
 
 This role adds functionality to the attribute metaclass for
 L<Bread::Board::Declare> objects.
-
-=cut
-
-=attr service
-
-Whether or not to create a service for this attribute. Defaults to true.
 
 =cut
 
