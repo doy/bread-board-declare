@@ -234,42 +234,26 @@ around get_value => sub {
     }
 };
 
-if (Moose->VERSION > 1.9900) {
-    around _inline_instance_get => sub {
-        my $orig = shift;
-        my $self = shift;
-        my ($instance) = @_;
-        return 'do {' . "\n"
-                . 'my $val;' . "\n"
-                . 'if (' . $self->_inline_instance_has($instance) . ') {' . "\n"
-                    . '$val = ' . $self->$orig($instance) . ';' . "\n"
-                . '}' . "\n"
-                . 'else {' . "\n"
-                    . '$val = ' . $instance . '->get_service(\'' . $self->name . '\')->get;' . "\n"
-                    . join("\n", $self->_inline_check_constraint(
-                        '$val',
-                        '$type_constraint',
-                        (Moose->VERSION >= 2.0100
-                            ? '$type_message'
-                            : '$type_constraint_obj'),
-                    )) . "\n"
-                . '}' . "\n"
-                . '$val' . "\n"
-            . '}';
-    };
-}
-else {
-    around accessor_metaclass => sub {
-        my $orig = shift;
-        my $self = shift;
-
-        return Moose::Meta::Class->create_anon_class(
-            superclasses => [ $self->$orig(@_) ],
-            roles        => [ 'Bread::Board::Declare::Meta::Role::Accessor' ],
-            cache        => 1
-        )->name;
-    };
-}
+around _inline_instance_get => sub {
+    my $orig = shift;
+    my $self = shift;
+    my ($instance) = @_;
+    return 'do {' . "\n"
+            . 'my $val;' . "\n"
+            . 'if (' . $self->_inline_instance_has($instance) . ') {' . "\n"
+                . '$val = ' . $self->$orig($instance) . ';' . "\n"
+            . '}' . "\n"
+            . 'else {' . "\n"
+                . '$val = ' . $instance . '->get_service(\'' . $self->name . '\')->get;' . "\n"
+                . join("\n", $self->_inline_check_constraint(
+                    '$val',
+                    '$type_constraint',
+                    '$type_message',
+                )) . "\n"
+            . '}' . "\n"
+            . '$val' . "\n"
+        . '}';
+};
 
 no Moose::Role;
 

@@ -107,17 +107,6 @@ they are explicitly disabled. In addition, multiple inheritance would just
 cause a lot of problems, so it is also disabled (although single inheritance
 and role application works properly).
 
-NOTE: When using this module in roles with Moose versions prior to 2.0, the
-attribute trait will need to be applied explicitly to attributes that should
-become services, as in:
-
-  has attr => (
-      traits => ['Service'],
-      is     => 'ro',
-      isa    => 'Str',
-      value  => 'value',
-  )
-
 =cut
 
 my (undef, undef, $init_meta) = Moose::Exporter->build_import_methods(
@@ -128,12 +117,9 @@ my (undef, undef, $init_meta) = Moose::Exporter->build_import_methods(
         class     => ['Bread::Board::Declare::Meta::Role::Class'],
         instance  => ['Bread::Board::Declare::Meta::Role::Instance'],
     },
-    (Moose->VERSION >= 1.9900
-        ? (role_metaroles => {
-               applied_attribute =>
-                   ['Bread::Board::Declare::Meta::Role::Attribute'],
-           })
-        : ()),
+    role_metaroles => {
+        applied_attribute => ['Bread::Board::Declare::Meta::Role::Attribute'],
+    },
     base_class_roles => ['Bread::Board::Declare::Role::Object'],
 );
 

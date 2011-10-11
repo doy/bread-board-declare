@@ -61,9 +61,7 @@ around _inline_instance_get => sub {
                 . join("\n", $self->_inline_check_constraint(
                     '$val',
                     '$type_constraint',
-                    (Moose->VERSION >= 2.0100
-                        ? '$type_message'
-                        : '$type_constraint_obj'),
+                    '$type_message',
                 )) . "\n"
             . '}' . "\n"
             . '$val' . "\n"

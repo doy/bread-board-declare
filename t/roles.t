@@ -10,9 +10,6 @@ use Test::Moose;
     use Bread::Board::Declare;
 
     has role1 => (
-        (Moose->VERSION < 1.9900
-            ? (traits => ['Service'])
-            : ()),
         is     => 'ro',
         isa    => 'Str',
         value  => 'ROLE1',
@@ -49,9 +46,6 @@ use Test::Moose;
     use Bread::Board::Declare;
 
     has role2 => (
-        (Moose->VERSION < 1.9900
-            ? (traits => ['Service'])
-            : ()),
         is     => 'ro',
         isa    => 'Str',
         value  => 'ROLE2',
