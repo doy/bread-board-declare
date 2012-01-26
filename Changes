@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.11  2012-01-26
       - dependencies can now be specified inline with the dep() function
       - type inference can now infer dependencies that are non-moose classes,
         and dependencies which are created by block injections (as long as the
