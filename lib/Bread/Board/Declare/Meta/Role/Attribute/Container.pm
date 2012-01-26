@@ -1,8 +1,47 @@
 package Bread::Board::Declare::Meta::Role::Attribute::Container;
 use Moose::Role;
 Moose::Util::meta_attribute_alias('Container');
+# ABSTRACT: attribute metarole for container attributes in Bread::Board::Declare
 
 use Class::Load 'load_class';
+
+=head1 DESCRIPTION
+
+This attribute trait indicates that the attribute (in a
+L<Bread::Board::Declare> class) contains a subcontainer rather than a service.
+It must be specified explicitly (or else a service that happens to return a
+container will be created):
+
+  has attr => (
+      traits => ['Container'],
+      is     => 'ro',
+      isa    => 'Bread::Board::Container',
+  );
+
+Container attributes (unlike service attributes) can have defaults and
+builders, allowing you to also define subcontainers inline when desired, as in:
+
+  has attr => (
+      traits  => ['Container'],
+      is      => 'ro',
+      isa     => 'Bread::Board::Container',
+      default => sub {
+          container Foo => as {
+              service Bar => 'BAR';
+          };
+      }
+  );
+
+=cut
+
+=attr dependencies
+
+If no default or builder is supplied, the type constraint will be used to
+create a container instance automatically (using a temporary
+L<ConstructorInjection|Bread::Board::ConstructorInjection> service). This is
+the dependency specification to use for that temporary service.
+
+=cut
 
 has dependencies => (
     is        => 'ro',
