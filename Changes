@@ -1,6 +1,7 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+      - fix for hash randomization in blead
 
 0.12  2012-02-12
       - add explicit dep on Class::Load, since Moose didn't do that until 2.04
