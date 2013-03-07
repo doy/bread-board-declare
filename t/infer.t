@@ -75,7 +75,7 @@ use Test::Fatal;
     my $c = My::Container->new;
     like(
         exception { $c->baz_no_infer },
-        qr/^Attribute \(bar\) is required/,
+        qr/^Attribute \((?:foo|bar)\) is required/,
         "not inferred when not requested"
     );
 }
