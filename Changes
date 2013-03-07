@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.13  2013-03-07
       - fix for hash randomization in blead
 
 0.12  2012-02-12
