@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+      - fix inheriting from classes which aren't yet loaded (reported by
+        xenoterracide)
 
 0.13  2013-03-07
       - fix for hash randomization in blead

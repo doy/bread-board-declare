@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Test::More;
 use Test::Moose;
+use Test::Fatal;
 
 {
     package Parent;
@@ -119,5 +120,14 @@ with_immutable {
     is($child->quux, 'OOFOOFBARZABQUUX');
 }
 } 'Parent', 'Child';
+
+{
+    package FromDisk::Sub;
+    use Moose;
+    use Bread::Board::Declare;
+    use lib 't/lib';
+
+    ::is(::exception { extends 'FromDisk' }, undef);
+}
 
 done_testing;

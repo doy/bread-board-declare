@@ -3,6 +3,7 @@ use Moose::Role;
 # ABSTRACT: class metarole for Bread::Board::Declare
 
 use Bread::Board::Service;
+use Class::Load qw(load_class);
 use List::MoreUtils qw(any);
 
 =head1 DESCRIPTION
@@ -32,6 +33,8 @@ before superclasses => sub {
 
     die "Multiple inheritance is not supported for Bread::Board::Declare classes"
         if @_ > 1;
+
+    load_class($_[0]);
 
     return if $_[0]->isa('Bread::Board::Container');
 
