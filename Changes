@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.14  2013-05-14
       - fix inheriting from classes which aren't yet loaded (reported by
         xenoterracide)
 
