@@ -195,9 +195,8 @@ sub dep {
 
 No known bugs.
 
-Please report any bugs through RT: email
-C<bug-bread-board-declare at rt.cpan.org>, or browse to
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Bread-Board-Declare>.
+Please report any bugs to GitHub Issues at
+L<https://github.com/doy/bread-board-declare/issues>.
 
 =head1 SEE ALSO
 
@@ -213,21 +212,21 @@ You can also look for information at:
 
 =over 4
 
-=item * AnnoCPAN: Annotated CPAN documentation
+=item * MetaCPAN
 
-L<http://annocpan.org/dist/Bread-Board-Declare>
+L<https://metacpan.org/release/Bread-Board-Declare>
 
-=item * CPAN Ratings
+=item * Github
 
-L<http://cpanratings.perl.org/d/Bread-Board-Declare>
+L<https://github.com/doy/bread-board-declare>
 
 =item * RT: CPAN's request tracker
 
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Bread-Board-Declare>
 
-=item * Search CPAN
+=item * CPAN Ratings
 
-L<http://search.cpan.org/dist/Bread-Board-Declare>
+L<http://cpanratings.perl.org/d/Bread-Board-Declare>
 
 =back
 
