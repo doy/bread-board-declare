@@ -4,7 +4,6 @@ use Moose::Role;
 
 use Bread::Board::Service;
 use Class::Load qw(load_class);
-use List::MoreUtils qw(any);
 
 =head1 DESCRIPTION
 

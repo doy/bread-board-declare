@@ -2,7 +2,6 @@ package Bread::Board::Declare::Meta::Role::Attribute;
 use Moose::Role;
 # ABSTRACT: base attribute metarole for Bread::Board::Declare
 
-use List::MoreUtils 'any';
 use Moose::Util 'does_role', 'find_meta';
 
 use Bread::Board::Declare::Meta::Role::Attribute::Container;

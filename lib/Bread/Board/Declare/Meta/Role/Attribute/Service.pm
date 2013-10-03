@@ -5,7 +5,6 @@ Moose::Util::meta_attribute_alias('Service');
 
 use Bread::Board::Types;
 use Class::Load qw(load_class);
-use List::MoreUtils qw(any);
 
 use Bread::Board::Declare::BlockInjection;
 use Bread::Board::Declare::ConstructorInjection;
@@ -195,8 +194,8 @@ after _process_options => sub {
                || exists $opts->{value};
 
     # XXX: uggggh
-    return if any { $_ eq 'Moose::Meta::Attribute::Native::Trait::String'
-                 || $_ eq 'Moose::Meta::Attribute::Native::Trait::Counter' }
+    return if grep { $_ eq 'Moose::Meta::Attribute::Native::Trait::String'
+                  || $_ eq 'Moose::Meta::Attribute::Native::Trait::Counter' }
               @{ $opts->{traits} };
 
     my $exists = exists($opts->{default}) ? 'default' : 'builder';
