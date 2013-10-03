@@ -23,11 +23,12 @@ after BUILD => sub {
     );
     for my $service ($meta->get_all_services) {
         if ($service->isa('Bread::Board::Declare::BlockInjection')) {
+            Scalar::Util::weaken(my $weakself = $self);
             my $block = $service->block;
             $self->add_service(
                 $service->clone(
                     block => sub {
-                        $block->(@_, $self)
+                        $block->(@_, $weakself)
                     },
                 )
             );

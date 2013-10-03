@@ -170,10 +170,11 @@ after attach_to_class => sub {
         );
     }
     else {
+        my $name = $self->name;
         $service = Bread::Board::Declare::BlockInjection->new(
             %params,
             block => sub {
-                die "Attribute " . $self->name . " did not specify a service."
+                die "Attribute $name did not specify a service."
                   . " It must be given a value through the constructor or"
                   . " writer method before it can be resolved."
             },
