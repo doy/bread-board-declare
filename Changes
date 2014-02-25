@@ -1,6 +1,8 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+
+0.16  2014-02-25
       - fix tests for new moose (reported by kentfredric, #4)
 
 0.15  2013-10-03
