@@ -6,6 +6,7 @@ use Test::Moose;
 
 {
     package Bar;
+    BEGIN { $INC{'Bar.pm'} = __FILE__ }
 
     sub create { bless {}, shift }
 }

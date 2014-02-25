@@ -5,6 +5,7 @@ use Test::More;
 
 {
     package NonMoose;
+    BEGIN { $INC{'NonMoose.pm'} = __FILE__ }
     sub new { bless { data => $_[0] }, shift }
 }
 
