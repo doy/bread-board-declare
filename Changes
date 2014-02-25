@@ -1,6 +1,7 @@
 Revision history for Bread-Board-Declare
 
 {{$NEXT}}
+      - fix tests for new moose (reported by kentfredric, #4)
 
 0.15  2013-10-03
       - fix a memory leak with block injections (Roman Daniel)
